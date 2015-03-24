@@ -1,0 +1,14 @@
+C:\Users\Hristo\documents\visual studio 2013\Projects\App2\App2\bin\Debug\ReverseMap\resources.pri
+C:\Users\Hristo\documents\visual studio 2013\Projects\App2\App2\bin\Debug\AppxManifest.xml
+C:\Users\Hristo\documents\visual studio 2013\Projects\App2\App2\bld\Debug\priconfig.xml
+C:\Users\Hristo\documents\visual studio 2013\Projects\App2\App2\bld\Debug\priconfig.xml.intermediate
+C:\Users\Hristo\documents\visual studio 2013\Projects\App2\App2\bld\Debug\layout.resfiles
+C:\Users\Hristo\documents\visual studio 2013\Projects\App2\App2\bld\Debug\layout.resfiles.intermediate
+C:\Users\Hristo\documents\visual studio 2013\Projects\App2\App2\bld\Debug\resources.resfiles
+C:\Users\Hristo\documents\visual studio 2013\Projects\App2\App2\bld\Debug\resources.resfiles.intermediate
+C:\Users\Hristo\documents\visual studio 2013\Projects\App2\App2\bld\Debug\pri.resfiles
+C:\Users\Hristo\documents\visual studio 2013\Projects\App2\App2\bld\Debug\pri.resfiles.intermediate
+C:\Users\Hristo\documents\visual studio 2013\Projects\App2\App2\bld\Debug\qualifiers.txt
+C:\Users\Hristo\documents\visual studio 2013\Projects\App2\App2\bld\Debug\qualifiers.txt.intermediate
+C:\Users\Hristo\documents\visual studio 2013\Projects\App2\App2\bld\Debug\MultipleQualifiersPerDimensionFound.txt
+C:\Users\Hristo\documents\visual studio 2013\Projects\App2\App2\bld\Debug\ProjectArchitectures.txt
