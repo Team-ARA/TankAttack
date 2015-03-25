@@ -67,8 +67,6 @@ function playerOutOfCanvas() {
     if (player.position.y > 570) {
         player.position.y = 570;
     }
-
-    
 }
 function playerLooking() {
     if (player.watchPos.right == true) {
