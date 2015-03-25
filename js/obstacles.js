@@ -6,11 +6,14 @@ var Obstacle = (function () {
         this.position = new Vector2(x, y);
 
         this.animation = new Animation(100, 100, 0, 0, 1, 'images/stones.png', 22, 0, 0);
+        this.boundingBox = new Rectangle(x, y, this.width, this.height);
     }
     Obstacle.prototype.update = function () {
 
 
         this.animation.position.set(this.position.x, this.position.y);
+        this.boundingBox.x = this.position.x;
+        this.boundingBox.y = this.position.y;
         this.animation.update();
     };
     Obstacle.prototype.render = function (ctx) {
