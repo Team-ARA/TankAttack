@@ -22,6 +22,11 @@ var previousTime = Date.now();
 
 
 //create background image of the canvas
+function createPattern(){
+    var pattern = ctx.createPattern(pic, 'repeat');
+    ctx.fillStyle = pattern;
+    ctx.fillRect(0, 0, cWidth, cHeight);
+}
 
 function update() {
     this.tick();
