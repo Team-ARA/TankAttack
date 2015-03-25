@@ -283,6 +283,7 @@ var Animation = (function() {
     Animation.prototype.setLimit = function(limit) {
         this.limit = limit-1;
     };
+  
     /**
     * @param num
     */
