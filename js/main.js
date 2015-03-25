@@ -11,6 +11,7 @@ ctx = canvas.getContext('2d');
 var input = new Input();
 attachListeners(input);
 var terrain = new Terrain(0,0);
+var rock = new Obstacle(100,300);
 var player = new Player(canvas.width - 50, 100);
 
 
@@ -34,12 +35,14 @@ function tick() {
 
     player.update();
     terrain.update();
+    rock.update();
 }
 
 function render(ctx) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     terrain.render(ctx);
+    rock.render(ctx);
     player.render(ctx);
 
 }
