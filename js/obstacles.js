@@ -4,9 +4,10 @@
 var Obstacle = (function () {
     function Obstacle(x, y) {
         this.position = new Vector2(x, y);
-
-        this.animation = new Animation(100, 100, 0, 0, 1, 'images/stones.png', 22, 0, 0);
-        this.boundingBox = new Rectangle(x, y, this.width, this.height);
+        this.width = 100;
+        this.height = 100;
+        this.animation = new Animation(this.width, this.height, 0, 0, 1, 'images/stones.png', 22, 0, 0);
+        this.boundingBox = new Rectangle(x, y, this.width, this.height)
     }
     Obstacle.prototype.update = function () {
 
