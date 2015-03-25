@@ -29,10 +29,9 @@ function update() {
 function tick() {
     movePlayer();
     playerOutOfCanvas();
-<<<<<<< HEAD
+
     playerLooking();
-=======
->>>>>>> 39519f77a58f342551e841fa2b00c69c28277bd5
+
     player.update();
     terrain.update();
 }
@@ -49,11 +48,7 @@ function movePlayer() {
     player.movement.right = !!input.right;
     if (input.right) {
         console.log(1);
-<<<<<<< HEAD
-        
-=======
 
->>>>>>> 39519f77a58f342551e841fa2b00c69c28277bd5
     }
     player.movement.left = !!input.left;
     player.movement.up = !!input.up;
@@ -72,8 +67,7 @@ function playerOutOfCanvas() {
     if (player.position.y > 570) {
         player.position.y = 570;
     }
-<<<<<<< HEAD
-    
+
     
 }
 function playerLooking() {
@@ -90,12 +84,12 @@ function playerLooking() {
         player.animation = player.animationDown;
     }
 }
-=======
 
 
-}
 
->>>>>>> 39519f77a58f342551e841fa2b00c69c28277bd5
+
+
+
 
 
 update();
