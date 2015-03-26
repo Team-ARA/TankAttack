@@ -19,7 +19,8 @@ rocks.push(new Obstacle(500, 200));
 rocks.push(new Obstacle(400, 400));
 rocks.push(new Obstacle(100, 450));
 
-var player = new Player(canvas.width - 50, 100);
+var player = new Player(canvas.width /2, canvas.height - 50);
+var enemy = new Enemy(canvas.width /2, canvas.height - 500);
 
 var previousTime = Date.now();
 
@@ -42,6 +43,7 @@ function tick() {
     playerLooking();
 
     player.update();
+    enemy.update();
     terrain.update();
     rocks.forEach(function (element) {
         element.update();
@@ -58,6 +60,7 @@ function render(ctx) {
     });
 
     player.render(ctx);
+    enemy.render(ctx);
 
 }
 
