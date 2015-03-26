@@ -19,26 +19,30 @@ var Player = (function () {
             this.watchPos.left = false;
             this.watchPos.up = false;
             this.watchPos.down = false;
-            this.position.x += this.velocity;
+            //this.position.x += this.velocity;
+            this.position.set(this.position.x + this.velocity, this.position.y);
         } else if (this.movement.left) {
             this.watchPos.right = false;
             this.watchPos.left = true;
             this.watchPos.up = false;
             this.watchPos.down = false;
-            this.position.x -= this.velocity;
+            //this.position.x -= this.velocity;
+            this.position.set(this.position.x - this.velocity, this.position.y);
         }
-        if (this.movement.up) {
+        else if (this.movement.up) {
             this.watchPos.right = false;
             this.watchPos.left = false;
             this.watchPos.up = true;
             this.watchPos.down = false;
-            this.position.y -= this.velocity;
+            //this.position.y -= this.velocity;
+            this.position.set(this.position.x, this.position.y - this.velocity);
         } else if (this.movement.down) {
             this.watchPos.right = false;
             this.watchPos.left = false;
             this.watchPos.up = false;
             this.watchPos.down = true;
-            this.position.y += this.velocity;
+            //this.position.y += this.velocity;
+            this.position.set(this.position.x, this.position.y + this.velocity);
         }
        
         this.animation.position.set(this.position.x, this.position.y);

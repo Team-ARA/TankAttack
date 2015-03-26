@@ -100,7 +100,7 @@ var Vector2 = (function() {
     */
     Vector2.prototype.set = function(x, y) {
         if(!x && !y) {
-            console.log("No x or y has been passed to Vector2's set function");
+            //console.log("No x or y has been passed to Vector2's set function");
         } else {
             this.previousX = this.x;
             this.previousY = this.y;

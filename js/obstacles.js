@@ -8,7 +8,7 @@ var Obstacle = (function () {
         this.width = 65;
         this.height = 45;
         this.animation = new Animation(this.width, this.height, 0, 0, 1, 'images/stones.png', 22, 0, 0);
-        this.boundingBox = new Rectangle(x, y, this.width, this.height)
+        this.boundingBox = new Rectangle(x, y, this.width, this.height);
 
     }
 
