@@ -12,6 +12,13 @@ var input = new Input();
 attachListeners(input);
 var terrain = new Terrain(0,0);
 var rock = new Obstacle(100,300);
+//var rock = new Array(5);
+//rock[0] = new Obstacle(100,300);
+//rock[1] = new Obstacle(200,200);
+//rock[2] = new Obstacle(500,200);
+//rock[3] = new Obstacle(400,400);
+//rock[4] = new Obstacle(100,450);
+
 var player = new Player(canvas.width - 50, 100);
 
 
