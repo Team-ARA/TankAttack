@@ -19,8 +19,21 @@ rocks.push(new Obstacle(500, 200));
 rocks.push(new Obstacle(400, 400));
 rocks.push(new Obstacle(100, 450));
 
+var enemies = new Array();
+enemies.push(new Enemy(Math.random() * canvas.width, canvas.height - 580));
+var timer;
+function startTimer() {
+    timer = setInterval(function() {
+        if (Math.random() < 0.0005) {
+        enemies.push(new Enemy(Math.random() * canvas.width, canvas.height - 580));
+    }
+        }, 3000);
+}
+
+
+
 var player = new Player(canvas.width /2, canvas.height - 50);
-var enemy = new Enemy(canvas.width /2, canvas.height - 500);
+//var enemy = new Enemy(Math.random() * (canvas.width /2), canvas.height - 580);
 
 var previousTime = Date.now();
 
@@ -38,12 +51,15 @@ function tick() {
     playerOutOfCanvas();
     playerIntersectsWithObstacle();
     movePlayer();
-    
+    startTimer();
 
     playerLooking();
 
     player.update();
-    enemy.update();
+    enemies.forEach(function (element) {
+        element.update();
+    });
+    //enemy.update();
     terrain.update();
     rocks.forEach(function (element) {
         element.update();
@@ -60,7 +76,10 @@ function render(ctx) {
     });
 
     player.render(ctx);
-    enemy.render(ctx);
+    enemies.forEach(function(element) {
+        element.render(ctx);
+    });
+    //enemy.render(ctx);
 
 }
 
