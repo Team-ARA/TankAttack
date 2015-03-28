@@ -46,6 +46,7 @@ function update() {
 
 function tick() {
     bulletIntersectWithEnemy();
+    bulletIntersectWithObstacles();
     bulletOutOfCanvas();
     playerOutOfCanvas();
     playerIntersectsWithObstacle();
@@ -86,27 +87,22 @@ function render(ctx) {
 }
 
 function bulletIntersectWithEnemy() {
-    //enemies.forEach(function (element) {
-    //    bullets.forEach(function (elem) {
-    //        console.log(1);
-    //        delete element;
-    //        enemies.splice(element, 1)
-    //    });
-    //});
-    /*enemies.forEach(function (index) {
-        bullets.forEach(function (ind) {
-            if (bullets[ind].boundingBox.intersects(enemies[index].boundingBox)) {
-                bullets.splice(ind, 1);
-                enemies.splice(index, 1);
-            }
-        });
-
-    });*/
     for (var enemyIndex = 0; enemyIndex < enemies.length; enemyIndex++) {
         for (var bulletIndex = 0; bulletIndex < bullets.length; bulletIndex++) {
             if (bullets[bulletIndex].boundingBox.intersects(enemies[enemyIndex].boundingBox)) {
                 bullets.splice(bulletIndex, 1);
                 enemies.splice(enemyIndex, 1);
+            }
+        }
+    }
+
+}
+
+function bulletIntersectWithObstacles() {
+    for (var obstacleIndex = 0; obstacleIndex < rocks.length; obstacleIndex++) {
+        for (var bulletIndex = 0; bulletIndex < bullets.length; bulletIndex++) {
+            if (bullets[bulletIndex].boundingBox.intersects(rocks[obstacleIndex].boundingBox)) {
+                bullets.splice(bulletIndex, 1);
             }
         }
     }
