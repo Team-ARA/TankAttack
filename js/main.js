@@ -7,10 +7,9 @@ var canvas,
 canvas = document.getElementById('canvas');
 ctx = canvas.getContext('2d');
 
-
 var input = new Input();
 attachListeners(input);
-var terrain = new Terrain(0,0);
+var terrain = new Terrain(0, 0);
 var playerLooks = "up";
 var rocks = new Array();
 rocks.push(new Obstacle(100, 300));
@@ -24,22 +23,19 @@ var bullets = new Array();
 enemies.push(new Enemy(Math.random() * canvas.width, canvas.height - 580));
 var timer;
 function startTimer() {
-    timer = setInterval(function() {
+    timer = setInterval(function () {
         if (Math.random() < 0.0005) {
-        enemies.push(new Enemy(Math.random() * canvas.width, canvas.height - 580));
-    }
-        }, 3000);
+            enemies.push(new Enemy(Math.random() * canvas.width, canvas.height - 580));
+        }
+    }, 3000);
 }
 
-
-
-var player = new Player(canvas.width /2, canvas.height - 50);
+var player = new Player(canvas.width / 2, canvas.height - 50);
 //var enemy = new Enemy(Math.random() * (canvas.width /2), canvas.height - 580);
 
 var previousTime = Date.now();
 
-
-
+var shootOnce = true; //used for restraining the tank of shooting pultiple bullets
 //create background image of the canvas
 
 function update() {
@@ -57,15 +53,14 @@ function tick() {
     startTimer();
 
     playerLooking();
-    
+
     player.update();
-    bullets.forEach(function (elem) {
-        elem.update();
+    bullets.forEach(function (element) {
+        element.update();
     });
     enemies.forEach(function (element) {
         element.update();
     });
-    //enemy.update();
     terrain.update();
     rocks.forEach(function (element) {
         element.update();
@@ -77,18 +72,17 @@ function render(ctx) {
 
     terrain.render(ctx);
 
-    rocks.forEach(function(element) {
+    rocks.forEach(function (element) {
         element.render(ctx);
     });
     bullets.forEach(function (elem) {
         elem.render(ctx);
     });
     player.render(ctx);
-    enemies.forEach(function(element) {
+    enemies.forEach(function (element) {
         element.render(ctx);
     });
-    //enemy.render(ctx);
-    
+
 }
 
 function bulletIntersectWithEnemy() {
@@ -99,25 +93,35 @@ function bulletIntersectWithEnemy() {
     //        enemies.splice(element, 1)
     //    });
     //});
-    enemies.forEach(function (index) {
+    /*enemies.forEach(function (index) {
         bullets.forEach(function (ind) {
             if (bullets[ind].boundingBox.intersects(enemies[index].boundingBox)) {
-                bullets.removeAt(ind);
-                enemies.removeAt(index);
+                bullets.splice(ind, 1);
+                enemies.splice(index, 1);
             }
         });
 
-    });
+    });*/
+    for (var enemyIndex = 0; enemyIndex < enemies.length; enemyIndex++) {
+        for (var bulletIndex = 0; bulletIndex < bullets.length; bulletIndex++) {
+            if (bullets[bulletIndex].boundingBox.intersects(enemies[enemyIndex].boundingBox)) {
+                bullets.splice(bulletIndex, 1);
+                enemies.splice(enemyIndex, 1);
+            }
+        }
+    }
 
 }
 
 function movePlayer() {
     //console.log(player.position);
+
     player.movement.right = !!input.right;
     player.movement.left = !!input.left;
     player.movement.up = !!input.up;
     player.movement.down = !!input.down;
-    if (input.space) {
+
+    if (input.space && shootOnce) {
         if (player.watchPos.right == true) {
             playerLooks = "right";
         }
@@ -127,17 +131,22 @@ function movePlayer() {
         if (player.watchPos.up == true) {
             playerLooks = "up";
         }
-       
+
         if (player.watchPos.down == true) {
             playerLooks = "down";
         }
-        bullets.push(new Bullet(player.position.x, player.position.y + 10, playerLooks));
-        
+        bullets.push(new Bullet(player.position.x + 10, player.position.y + 10, playerLooks));
+        shootOnce = false;
+
+       var reloadTime = setTimeout(function() {
+           shootOnce = true;
+       }, 500)
     }
+    
 }
 function bulletOutOfCanvas() {
     bullets.forEach(function (item, index) {
-        if (item.position.x == 3) {
+        if (item.position.x < 3) {
             bullets.splice(index, 1);
         }
         if (item.position.x > 570) {
@@ -152,6 +161,7 @@ function bulletOutOfCanvas() {
     });
 
 }
+
 function playerOutOfCanvas() {
     if (player.position.x < 2) {
         player.position.set(2, player.position.y);

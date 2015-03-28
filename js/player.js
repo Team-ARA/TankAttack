@@ -28,8 +28,7 @@ var Player = (function () {
             this.watchPos.down = false;
             //this.position.x -= this.velocity;
             this.position.set(this.position.x - this.velocity, this.position.y);
-        }
-        else if (this.movement.up) {
+        } else if (this.movement.up) {
             this.watchPos.right = false;
             this.watchPos.left = false;
             this.watchPos.up = true;

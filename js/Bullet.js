@@ -3,7 +3,7 @@
         this.position = new Vector2(x, y);
         this.watchPos = { left: false, right: false, up: false, down: false };
         this.movement = { left: false, right: false, up: false, down: false };
-        this.velocity = 3;
+        this.velocity = 6;
         this.looking = playerLooks;
         this.width = 15;
         this.height = 15;
