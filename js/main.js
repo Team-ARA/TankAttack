@@ -49,7 +49,7 @@ function update() {
 }
 
 function tick() {
-  //  bulletIntersectWithEnemy();
+    bulletIntersectWithEnemy();
     bulletOutOfCanvas();
     playerOutOfCanvas();
     playerIntersectsWithObstacle();
@@ -92,23 +92,25 @@ function render(ctx) {
 }
 
 function bulletIntersectWithEnemy() {
-    enemies.forEach(function (element) {
-        bullets.forEach(function (elem) {
-            console.log(1);
-            delete element;
-            enemies.splice(element, 1)
+    //enemies.forEach(function (element) {
+    //    bullets.forEach(function (elem) {
+    //        console.log(1);
+    //        delete element;
+    //        enemies.splice(element, 1)
+    //    });
+    //});
+    enemies.forEach(function (index) {
+        bullets.forEach(function (ind) {
+            if (bullets[ind].boundingBox.intersects(enemies[index].boundingBox)) {
+                bullets.removeAt(ind);
+                enemies.removeAt(index);
+            }
         });
+
     });
-//    enemies.forEach(function (element, index) {
-//        bullets.forEach(function (elem, ind) {
-//            if (elem.boundingBox.intersects(element)) {
-//                bullets.splice(ind, 1);
-//                enemies.splice(index, 1)
-//            }
-//        });
-//    });
-       
+
 }
+
 function movePlayer() {
     //console.log(player.position);
     player.movement.right = !!input.right;
@@ -148,7 +150,7 @@ function bulletOutOfCanvas() {
             bullets.splice(index, 1);
         }
     });
-    
+
 }
 function playerOutOfCanvas() {
     if (player.position.x < 2) {
