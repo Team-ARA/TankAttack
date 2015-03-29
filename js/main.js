@@ -103,7 +103,12 @@ function bulletIntersectWithEnemy() {
             if (bullets[bulletIndex].boundingBox.intersects(enemies[enemyIndex].boundingBox)) {
                 bullets.splice(bulletIndex, 1);
                 enemies[enemyIndex].animation = enemies[enemyIndex].animationHit;
-                enemies.splice(enemyIndex, 1);
+                function delay() {
+                    timer = setTimeout(function () {
+                        enemies.splice(enemyIndex, 1);
+                    }, 500);
+                }
+
             }
         }
     }
