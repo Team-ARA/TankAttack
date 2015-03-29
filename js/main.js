@@ -52,6 +52,7 @@ function tick() {
     bulletOutOfCanvas();
     enemyBulletOutOfCanvas();
     playerOutOfCanvas();
+    enemyOutOfCanvas();
     playerIntersectsWithObstacle();
     movePlayer();
     enemiesShooting();
@@ -110,14 +111,12 @@ function bulletIntersectWithEnemy() {
 
 function enemyBulletIntersectWithPlayer() {
     for (var i = 0; i < enemyBullets.length; i++) {
-        if(enemyBullets[i].boundingBox.intersects(player.boundingBox)){
+        if (enemyBullets[i].boundingBox.intersects(player.boundingBox)) {
             enemyBullets.splice(i, 1);
             //explosion animation
         }
     }
 }
-
-
 
 function bulletIntersectWithObstacles() {
     for (var obstacleIndex = 0; obstacleIndex < rocks.length; obstacleIndex++) {
@@ -178,6 +177,16 @@ function enemiesShooting() {
 }
 
 
+
+function enemyOutOfCanvas() {
+    enemies.forEach(function (item, index) {
+        if (item.position.y > 570) {
+            enemies.splice(index, 1);
+        }
+    });
+}
+
+
 function bulletOutOfCanvas() {
     bullets.forEach(function (item, index) {
         if (item.position.x < 3) {
@@ -194,6 +203,7 @@ function bulletOutOfCanvas() {
         }
     });
 }
+
 
 
 function enemyBulletOutOfCanvas() {
