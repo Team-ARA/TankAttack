@@ -101,6 +101,7 @@ function bulletIntersectWithEnemy() {
         for (var bulletIndex = 0; bulletIndex < bullets.length; bulletIndex++) {
             if (bullets[bulletIndex].boundingBox.intersects(enemies[enemyIndex].boundingBox)) {
                 bullets.splice(bulletIndex, 1);
+                enemies[enemyIndex].animation = enemies[enemyIndex].animationHit;
                 enemies.splice(enemyIndex, 1);
             }
         }
