@@ -106,7 +106,7 @@ function bulletIntersectWithEnemy() {
                 function delay() {
                     timer = setTimeout(function () {
                         enemies.splice(enemyIndex, 1);
-                    }, 500);
+                    }, 1000);
                 }
 
             }
