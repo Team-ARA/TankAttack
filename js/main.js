@@ -20,6 +20,7 @@ rocks.push(new Obstacle(100, 450));
 
 var enemies = new Array();
 var bullets = new Array();
+var enemyBullets = new Array();
 enemies.push(new Enemy(Math.random() * canvas.width, canvas.height - 580));
 var timer;
 function startTimer() {
@@ -35,8 +36,8 @@ var player = new Player(canvas.width / 2, canvas.height - 50);
 
 var previousTime = Date.now();
 
-var shootOnce = true; //used for restraining the tank of shooting pultiple bullets
-//create background image of the canvas
+var shootOnce = true; //used for restraining the tank of shooting multiple bullets
+var shootOnceEnemy = true;
 
 function update() {
     this.tick();
@@ -46,17 +47,23 @@ function update() {
 
 function tick() {
     bulletIntersectWithEnemy();
+    enemyBulletIntersectWithPlayer();
     bulletIntersectWithObstacles();
     bulletOutOfCanvas();
+    enemyBulletOutOfCanvas();
     playerOutOfCanvas();
     playerIntersectsWithObstacle();
     movePlayer();
+    enemiesShooting();
     startTimer();
 
     playerLooking();
 
     player.update();
     bullets.forEach(function (element) {
+        element.update();
+    });
+    enemyBullets.forEach(function (element) {
         element.update();
     });
     enemies.forEach(function (element) {
@@ -79,6 +86,9 @@ function render(ctx) {
     bullets.forEach(function (elem) {
         elem.render(ctx);
     });
+    enemyBullets.forEach(function (elem) {
+        elem.render(ctx);
+    });
     player.render(ctx);
     enemies.forEach(function (element) {
         element.render(ctx);
@@ -95,8 +105,18 @@ function bulletIntersectWithEnemy() {
             }
         }
     }
-
 }
+
+function enemyBulletIntersectWithPlayer() {
+    for (var i = 0; i < enemyBullets.length; i++) {
+        if(enemyBullets[i].boundingBox.intersects(player.boundingBox)){
+            enemyBullets.splice(i, 1);
+            //explosion animation
+        }
+    }
+}
+
+
 
 function bulletIntersectWithObstacles() {
     for (var obstacleIndex = 0; obstacleIndex < rocks.length; obstacleIndex++) {
@@ -140,6 +160,23 @@ function movePlayer() {
     }
     
 }
+
+
+function enemiesShooting() {
+    if (shootOnceEnemy) {
+        for (var i = 0; i < enemies.length; i++) {
+            enemyBullets.push(new Bullet(enemies[i].position.x + 10, enemies[i].position.y + 10, "down"));
+            shootOnceEnemy = false;
+
+            var reloadTimeEnemy = setTimeout(function () {
+                shootOnceEnemy = true;
+            },2000)
+
+        }
+    }
+}
+
+
 function bulletOutOfCanvas() {
     bullets.forEach(function (item, index) {
         if (item.position.x < 3) {
@@ -155,8 +192,27 @@ function bulletOutOfCanvas() {
             bullets.splice(index, 1);
         }
     });
-
 }
+
+
+function enemyBulletOutOfCanvas() {
+    enemyBullets.forEach(function (item, index) {
+        if (item.position.x < 3) {
+            enemyBullets.splice(index, 1);
+        }
+        if (item.position.x > 570) {
+            enemyBullets.splice(index, 1);
+        }
+        if (item.position.y < 2) {
+            enemyBullets.splice(index, 1);
+        }
+        if (item.position.y > 570) {
+            enemyBullets.splice(index, 1);
+        }
+    });
+}
+
+
 
 function playerOutOfCanvas() {
     if (player.position.x < 2) {
