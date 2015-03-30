@@ -6,11 +6,13 @@ var Player = (function () {
         this.velocity = 3;
         this.width = 32;
         this.height = 32;
-        this.animation = new Animation(32, 32, 0, 0, 1, 'images/Tanks.png', 4, 0, 0);
-        this.animationDown = new Animation(32, 32, 0, 1, 4, 'images/Tanks.png', 4, 1, 1);
-        this.animationUp = new Animation(32, 32, 0, 0, 1, 'images/Tanks.png', 4, 0, 0);
-        this.animationRight = new Animation(32, 32, 1, 0, 1, 'images/Tanks.png', 4, 1, 0);
-        this.animationLeft = new Animation(32, 32, 1, 1, 1, 'images/Tanks.png', 4, 0, 0);
+        this.lives = 5;
+        this.animation = new Animation(this.width, this.height, 0, 0, 1, 'images/Tanks.png', 4, 0, 0);
+        this.animationDown = new Animation(this.width, this.width, 0, 1, 4, 'images/Tanks.png', 4, 1, 1);
+        this.animationUp = new Animation(this.width, this.width, 0, 0, 1, 'images/Tanks.png', 4, 0, 0);
+        this.animationRight = new Animation(this.width, this.width, 1, 0, 1, 'images/Tanks.png', 4, 1, 0);
+        this.animationLeft = new Animation(this.width, this.width, 1, 1, 1, 'images/Tanks.png', 4, 0, 0);
+        this.animationHit = new Animation(100, 100, 0, 0 , 74, 'images/explosion.png', 20, 9, 8);
         this.boundingBox = new Rectangle(x, y, this.width, this.height)
     }
     Player.prototype.update = function () {
@@ -45,12 +47,23 @@ var Player = (function () {
         }
        
         this.animation.position.set(this.position.x, this.position.y);
+        this.animationHit.position.set(this.position.x-30, this.position.y-30);
         this.boundingBox.x = this.position.x;
         this.boundingBox.y = this.position.y;
         this.animation.update();
+        for (var i = 0; i < enemyBullets.length; i++) {
+            if(this.boundingBox.intersects(enemyBullets[i].boundingBox)){
+                this.animationHit.update();
+            }
+        }
     };
     Player.prototype.render = function (ctx) {
         this.animation.draw(ctx);
+        for (var i = 0; i < enemyBullets.length; i++) {
+            if(this.boundingBox.intersects(enemyBullets[i].boundingBox)){
+                this.animationHit.draw(ctx);
+            }
+        }
     };
    
     return Player;

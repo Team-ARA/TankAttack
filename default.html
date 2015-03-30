@@ -7,8 +7,20 @@
 
 
     <style>
+        body {
+            /*display: flex;*/
+
+        }
         #canvas {
             border: solid 1px black;
+        }
+        div {
+            width: 300px;
+            height: 50px;
+            /*margin-left: 20px;*/
+            /*display: inline-block;*/
+            color: darkslategrey;
+            font: normal bold 20px Arial;
         }
     </style>
 </head>
@@ -20,6 +32,13 @@
     <canvas id="canvas" width="600" height="550">
         Your browser does not support canvas.
     </canvas>
+    <div>LIVES:
+        <img src="images/tank.png" id="life1">
+        <img src="images/tank.png" id="life2">
+        <img src="images/tank.png" id="life3">
+        <img src="images/tank.png" id="life4">
+        <img src="images/tank.png" id="life5">
+    </div>
     <script src="js/Bullet.js"></script>
     <script src="js/terrain.js"></script>
     <script src="js/obstacles.js"></script>

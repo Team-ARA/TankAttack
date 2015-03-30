@@ -73,6 +73,7 @@ function tick() {
     terrain.update();
     rocks.forEach(function (element) {
         element.update();
+
     });
 }
 
@@ -115,10 +116,18 @@ function bulletIntersectWithEnemy() {
 }
 
 function enemyBulletIntersectWithPlayer() {
+    var lives = player.lives;
     for (var i = 0; i < enemyBullets.length; i++) {
         if (enemyBullets[i].boundingBox.intersects(player.boundingBox)) {
             enemyBullets.splice(i, 1);
-            //explosion animation
+            if(lives > 0){
+                var life = document.getElementById('life' + lives);
+                life.style['display'] = 'none';
+            }
+            if(lives == 0) {
+                player.animation = player.animationHit;
+            }
+            lives--;
         }
     }
 }
@@ -278,11 +287,6 @@ function playerLooking() {
         player.animation = player.animationDown;
     }
 }
-
-
-
-
-
 
 
 
