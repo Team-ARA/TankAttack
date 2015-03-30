@@ -12,10 +12,19 @@ attachListeners(input);
 var terrain = new Terrain(0, 0);
 var playerLooks = "up";
 var rocks = new Array();
-rocks.push(new Obstacle(100, 300));
-rocks.push(new Obstacle(200, 300));
+for (var i = 1; i < 600; i+=25) {
+    rocks.push(new Obstacle(-20, i));
+}
+
+for (var i = 1; i < 600; i+=25) {
+    rocks.push(new Obstacle(560, i));
+}
+
+rocks.push(new Obstacle(100, 150));
+rocks.push(new Obstacle(400, 200));
+rocks.push(new Obstacle(450, 210));
 rocks.push(new Obstacle(500, 200));
-rocks.push(new Obstacle(400, 400));
+rocks.push(new Obstacle(200, 400));
 rocks.push(new Obstacle(100, 450));
 
 var enemies = new Array();
@@ -34,7 +43,7 @@ function startTimer() {
 
 var player = new Player(canvas.width / 2, canvas.height - 50);
 //var enemy = new Enemy(Math.random() * (canvas.width /2), canvas.height - 580);
-
+var lives = player.lives;
 var previousTime = Date.now();
 
 var shootOnce = true; //used for restraining the tank of shooting multiple bullets
@@ -118,7 +127,7 @@ function bulletIntersectWithEnemy() {
 }
 
 function enemyBulletIntersectWithPlayer() {
-    var lives = player.lives;
+
     for (var i = 0; i < enemyBullets.length; i++) {
         if (enemyBullets[i].boundingBox.intersects(player.boundingBox)) {
             explosionAnim.push(new Explosion(player.position.x + 10, player.position.y + 10));
@@ -131,7 +140,9 @@ function enemyBulletIntersectWithPlayer() {
                 console.log(2);
             }
             if(lives == 0) {
-                player.animation = player.animationHit;
+                ctx.fillStyle = 'black';
+                ctx.lineWidth = 10;
+                ctx.fillText('GAME OVER', 100, 200);
                 console.log(3);
             }
             lives--;
