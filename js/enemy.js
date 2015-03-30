@@ -4,6 +4,7 @@
 var Enemy = (function () {
     function Enemy(x, y) {
         this.position = new Vector2(x, y);
+        this.watchPos = { left: false, right: false, up: false, down: false };
         this.movement = { left: false, right: false, up: false, down: true };
         this.velocity = 1;
         this.velocityModifier = 0;
@@ -16,8 +17,33 @@ var Enemy = (function () {
 
 
     Enemy.prototype.update = function () {
-         if (this.movement.down) {
+        if (this.movement.up) {
+            this.watchPos.right = false;
+            this.watchPos.left = false;
+            this.watchPos.down = false;
+            this.watchPos.up = true;
+            this.position.y -= this.velocity + this.velocityModifier;
+         }
+        if (this.movement.down) {
+            this.watchPos.right = false;
+            this.watchPos.left = false;
+            this.watchPos.up = false;
+            this.watchPos.down = true;
             this.position.y += this.velocity + this.velocityModifier;
+        }
+        if (this.movement.left) {
+            this.watchPos.right = false;
+            this.watchPos.up = false;
+            this.watchPos.down = false;
+            this.watchPos.left = true;
+            this.position.x -= this.velocity + this.velocityModifier;
+        }
+        if (this.movement.right) {
+            this.watchPos.left = false;
+            this.watchPos.up = false;
+            this.watchPos.down = false;
+            this.watchPos.right = true;
+            this.position.x += this.velocity + this.velocityModifier;
         }
 
         this.animation.position.set(this.position.x, this.position.y);
@@ -42,5 +68,7 @@ var Enemy = (function () {
         }
     };
 
+    
     return Enemy;
 }());
+

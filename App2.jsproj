@@ -55,6 +55,7 @@
     <AppxManifest Include="package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
+    <Content Include="App2.sln" />
     <Content Include="App2.v12.suo" />
     <Content Include="bin\Debug\AppxManifest.xml" />
     <Content Include="bin\Debug\ReverseMap\resources.pri" />
@@ -72,21 +73,46 @@
     <Content Include="bld\Debug\resources.resfiles" />
     <Content Include="bld\Debug\resources.resfiles.intermediate" />
     <Content Include="default.html" />
+    <Content Include="images\Baddies-MS2M.gif" />
+    <Content Include="images\bul.png" />
+    <Content Include="images\bullet.png" />
+    <Content Include="images\bulletside.png" />
+    <Content Include="images\Enemies.png" />
+    <Content Include="images\Enemies.psd" />
+    <Content Include="images\explosion.png" />
+    <Content Include="images\large_rock.png" />
+    <Content Include="images\large_stone.png" />
     <Content Include="images\logo.scale-100.png" />
+    <Content Include="images\rock.png" />
+    <Content Include="images\rocks_rotated.png" />
     <Content Include="images\smalllogo.scale-100.png" />
     <Content Include="images\splashscreen.scale-100.png" />
+    <Content Include="images\sprites.png" />
+    <Content Include="images\stones.png" />
     <Content Include="images\storelogo.scale-100.png" />
     <Content Include="images\tank.png" />
     <Content Include="images\Tanks.bmp" />
+    <Content Include="images\Tanks.png" />
     <Content Include="images\Tanks.psd" />
+    <Content Include="images\terrain1.jpg" />
+    <Content Include="images\terrain2.jpg" />
     <Content Include="images\texture1.jpg" />
     <Content Include="images\texture2.jpg" />
     <Content Include="images\texture3.jpg" />
     <Content Include="css\default.css" />
+    <Content Include="images\Thumbs.db" />
+    <Content Include="images\tree.png" />
+    <Content Include="js\Bullet.js" />
+    <Content Include="js\enemy.js" />
+    <Content Include="js\explosion.js" />
     <Content Include="js\main.js" />
+    <Content Include="js\obstacles.js" />
     <Content Include="js\Player.js" />
     <Content Include="js\framework.js" />
     <Content Include="js\Terrain.js" />
+    <Content Include="sounds\marder-75mm-pak40.mp3" />
+    <Content Include="sounds\marder-moving.mp3" />
+    <Content Include="sounds\WoT-Battle-2.mp3" />
     <None Include="App2_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>

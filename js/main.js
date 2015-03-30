@@ -124,17 +124,20 @@ function enemyBulletIntersectWithPlayer() {
             explosionAnim.push(new Explosion(player.position.x + 10, player.position.y + 10));
             resetPlayer();
             enemyBullets.splice(i, 1);
-            console.log(1);
-            if(lives > 0){
-                var life = document.getElementById('life' + lives);
+            if (player.lives > 0) {
+                var life = document.getElementById('life' + player.lives);
                 life.style['display'] = 'none';
-                console.log(2);
             }
-            if(lives == 0) {
-                player.animation = player.animationHit;
-                console.log(3);
+            if (player.lives == 0) {
+                var text = 'YOU WERE DEFEATED',
+                    x = 30,
+                    y = 250;
+                ctx.font = 'normal 50px Arial bold';
+                ctx.fillStyle = 'white';
+                ctx.fillText(text, x, y);
+                ctx.lineWidth = 6;
             }
-            lives--;
+            player.lives--;
         }
     }
 }
@@ -148,6 +151,23 @@ function bulletIntersectWithObstacles() {
         }
     }
 
+}
+function enemyIntersectWithObstacles() {
+    for (var enemyIndex = 0; enemyIndex < enemies.length; enemyIndex++) {
+        for (var rocksIndex = 0; rocksIndex < rocks.length; rocksIndex++) {
+            if (enemies[enemyIndex].boundingBox.intersects(rocks[obstacleIndex].boundingBox)) {
+                //enemyMove();
+                if (enemies[enemyIndex].watchPos.down) {
+                    enemies[enemyIndex].movement.left = true;
+                }
+            }
+        }
+    }
+}
+function enemyMove() {
+    if (s) {
+
+    }
 }
 
 function movePlayer() {
