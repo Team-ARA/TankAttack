@@ -19,6 +19,7 @@ rocks.push(new Obstacle(400, 400));
 rocks.push(new Obstacle(100, 450));
 
 var enemies = new Array();
+var explosionAnim = new Array();
 var bullets = new Array();
 var enemyBullets = new Array();
 enemies.push(new Enemy(Math.random() * canvas.width, canvas.height - 580));
@@ -46,6 +47,7 @@ function update() {
 }
 
 function tick() {
+    explosionAnimTimer();
     bulletIntersectWithEnemy();
     enemyBulletIntersectWithPlayer();
     bulletIntersectWithObstacles();
@@ -73,7 +75,9 @@ function tick() {
     terrain.update();
     rocks.forEach(function (element) {
         element.update();
-
+    });
+    explosionAnim.forEach(function (element) {
+        element.update();
     });
 }
 
@@ -95,6 +99,9 @@ function render(ctx) {
     enemies.forEach(function (element) {
         element.render(ctx);
     });
+    explosionAnim.forEach(function (element) {
+        element.render(ctx);
+    });
 
 }
 
@@ -103,13 +110,8 @@ function bulletIntersectWithEnemy() {
         for (var bulletIndex = 0; bulletIndex < bullets.length; bulletIndex++) {
             if (bullets[bulletIndex].boundingBox.intersects(enemies[enemyIndex].boundingBox)) {
                 bullets.splice(bulletIndex, 1);
-                enemies[enemyIndex].animation = enemies[enemyIndex].animationHit;
-                function delay() {
-                    timer = setTimeout(function () {
-                        enemies.splice(enemyIndex, 1);
-                    }, 1000);
-                }
-
+                explosionAnim.push(new Explosion(enemies[enemyIndex].position.x + 10, enemies[enemyIndex].position.y + 10));
+                enemies.splice(enemyIndex, 1);
             }
         }
     }
@@ -119,13 +121,18 @@ function enemyBulletIntersectWithPlayer() {
     var lives = player.lives;
     for (var i = 0; i < enemyBullets.length; i++) {
         if (enemyBullets[i].boundingBox.intersects(player.boundingBox)) {
+            explosionAnim.push(new Explosion(player.position.x + 10, player.position.y + 10));
+            resetPlayer();
             enemyBullets.splice(i, 1);
+            console.log(1);
             if(lives > 0){
                 var life = document.getElementById('life' + lives);
                 life.style['display'] = 'none';
+                console.log(2);
             }
             if(lives == 0) {
                 player.animation = player.animationHit;
+                console.log(3);
             }
             lives--;
         }
@@ -288,6 +295,25 @@ function playerLooking() {
     }
 }
 
+function explosionAnimTimer() {
+  
+    for (var animIndex = 0; animIndex < explosionAnim.length; animIndex++) {
+        explosionAnim[animIndex].timer += 0.01;
+        if (explosionAnim[animIndex].timer > 1) {
+            explosionAnim.splice(animIndex, 1);
+        }
+    }
 
+}
+
+function resetPlayer() {
+    player.position.x = canvas.width / 2;
+    player.position.y = canvas.height - 50;
+    player.watchPos.up = true;
+    player.watchPos.down = false;
+    player.watchPos.right = false;
+    player.watchPos.left = false;
+  
+}
 
 update();
