@@ -14,6 +14,7 @@ var playerLooks = "up";
 var walls = new Array();
 
 var shootEff = document.getElementById("soundEfx");
+var movingEff = document.getElementById("movingEfx");
 
 /*these are the terrain elements*/
 for (var i = 0; i < 600; i += 30) {
@@ -162,6 +163,7 @@ function bulletIntersectWithEnemy() {
 function enemyBulletIntersectWithPlayer() {
     for (var i = 0; i < enemyBullets.length; i++) {
         if (enemyBullets[i].boundingBox.intersects(player.boundingBox)) {
+            shootEff.play();
             explosionAnim.push(new Explosion(player.position.x + 10, player.position.y + 10));
             resetPlayer();
             enemyBullets.splice(i, 1);
@@ -212,6 +214,9 @@ function movePlayer() {
     player.movement.up = !!input.up;
     player.movement.down = !!input.down;
 
+    if(input.right || input.left || input.up || input.down){
+        movingEff.play();
+    }
 
     if (input.space && shootOnce) {
         if (player.watchPos.right == true) {
