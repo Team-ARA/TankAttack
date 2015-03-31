@@ -69,10 +69,12 @@ function startTimer() {
 var player = new Player(canvas.width / 2, canvas.height - 50);
 //var enemy = new Enemy(Math.random() * (canvas.width /2), canvas.height - 580);
 var lives = player.lives;
+var counter = 0;
 var previousTime = Date.now();
 
 var shootOnce = true; //used for restraining the tank of shooting multiple bullets
 var shootOnceEnemy = true;
+
 
 function update() {
     this.tick();
@@ -146,6 +148,9 @@ function bulletIntersectWithEnemy() {
                 bullets.splice(bulletIndex, 1);
                 explosionAnim.push(new Explosion(enemies[enemyIndex].position.x + 10, enemies[enemyIndex].position.y + 10));
                 enemies.splice(enemyIndex, 1);
+                counter += 1;
+                var points = document.getElementById('nums');
+                points.innerHTML = counter;
             }
         }
     }
@@ -203,6 +208,7 @@ function movePlayer() {
     player.movement.left = !!input.left;
     player.movement.up = !!input.up;
     player.movement.down = !!input.down;
+
 
     if (input.space && shootOnce) {
         if (player.watchPos.right == true) {
