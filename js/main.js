@@ -11,21 +11,40 @@ var input = new Input();
 attachListeners(input);
 var terrain = new Terrain(0, 0);
 var playerLooks = "up";
-var rocks = new Array();
-for (var i = 1; i < 600; i+=25) {
-    rocks.push(new Obstacle(-20, i));
+var walls = new Array();
+
+/*these are the terrain elements*/
+for (var i = 1; i < 600; i += 30) {
+    walls.push(new Obstacle(-15, i));
+    walls.push(new Obstacle(585, i));
 }
 
-for (var i = 1; i < 600; i+=25) {
-    rocks.push(new Obstacle(560, i));
-}
+walls.push(new Obstacle(120, 90));
+walls.push(new Obstacle(120, 120));
+walls.push(new Obstacle(120, 150));
+walls.push(new Obstacle(150, 90));
+walls.push(new Obstacle(180, 90));
 
-rocks.push(new Obstacle(100, 150));
-rocks.push(new Obstacle(400, 200));
-rocks.push(new Obstacle(450, 210));
-rocks.push(new Obstacle(500, 200));
-rocks.push(new Obstacle(200, 400));
-rocks.push(new Obstacle(100, 450));
+walls.push(new Obstacle(120, 450));
+walls.push(new Obstacle(120, 420));
+walls.push(new Obstacle(120, 390));
+walls.push(new Obstacle(150, 450));
+walls.push(new Obstacle(180, 450));
+
+walls.push(new Obstacle(480, 450));
+walls.push(new Obstacle(480, 420));
+walls.push(new Obstacle(480, 390));
+walls.push(new Obstacle(450, 450));
+walls.push(new Obstacle(420, 450));
+
+walls.push(new Obstacle(480, 90));
+walls.push(new Obstacle(480, 120));
+walls.push(new Obstacle(480, 150));
+walls.push(new Obstacle(450, 90));
+walls.push(new Obstacle(420, 90));
+
+walls.push(new Obstacle(, 90));
+/*terain objects end here*/
 
 var enemies = new Array();
 var explosionAnim = new Array();
@@ -61,7 +80,6 @@ function tick() {
     enemyBulletIntersectWithPlayer();
     bulletIntersectWithObstacles();
     bulletOutOfCanvas();
-    enemyBulletOutOfCanvas();
     playerOutOfCanvas();
     enemyOutOfCanvas();
     playerIntersectsWithObstacle();
@@ -82,7 +100,7 @@ function tick() {
         element.update();
     });
     terrain.update();
-    rocks.forEach(function (element) {
+    walls.forEach(function (element) {
         element.update();
     });
     explosionAnim.forEach(function (element) {
@@ -95,7 +113,7 @@ function render(ctx) {
 
     terrain.render(ctx);
 
-    rocks.forEach(function (element) {
+    walls.forEach(function (element) {
         element.render(ctx);
     });
     bullets.forEach(function (elem) {
@@ -151,9 +169,9 @@ function enemyBulletIntersectWithPlayer() {
 }
 
 function bulletIntersectWithObstacles() {
-    for (var obstacleIndex = 0; obstacleIndex < rocks.length; obstacleIndex++) {
+    for (var obstacleIndex = 0; obstacleIndex < walls.length; obstacleIndex++) {
         for (var bulletIndex = 0; bulletIndex < bullets.length; bulletIndex++) {
-            if (bullets[bulletIndex].boundingBox.intersects(rocks[obstacleIndex].boundingBox)) {
+            if (bullets[bulletIndex].boundingBox.intersects(walls[obstacleIndex].boundingBox)) {
                 bullets.splice(bulletIndex, 1);
             }
         }
@@ -212,49 +230,44 @@ function enemiesShooting() {
 
 function enemyOutOfCanvas() {
     enemies.forEach(function (item, index) {
-        if (item.position.y > 570) {
+        if (item.position.y > 600) {
             enemies.splice(index, 1);
         }
-    });
+    })
 }
 
 
 function bulletOutOfCanvas() {
     bullets.forEach(function (item, index) {
-        if (item.position.x < 3) {
+        if (item.position.x < -10) {
             bullets.splice(index, 1);
         }
-        if (item.position.x > 570) {
+        if (item.position.x > 600) {
             bullets.splice(index, 1);
         }
-        if (item.position.y < 2) {
+        if (item.position.y < -10) {
             bullets.splice(index, 1);
         }
-        if (item.position.y > 570) {
+        if (item.position.y > 600) {
             bullets.splice(index, 1);
         }
-    });
-}
+    })
 
-
-
-function enemyBulletOutOfCanvas() {
     enemyBullets.forEach(function (item, index) {
-        if (item.position.x < 3) {
+        if (item.position.x < -10) {
             enemyBullets.splice(index, 1);
         }
-        if (item.position.x > 570) {
+        if (item.position.x > 580) {
             enemyBullets.splice(index, 1);
         }
-        if (item.position.y < 2) {
+        if (item.position.y < -10) {
             enemyBullets.splice(index, 1);
         }
-        if (item.position.y > 570) {
+        if (item.position.y > 580) {
             enemyBullets.splice(index, 1);
         }
-    });
+    })
 }
-
 
 
 function playerOutOfCanvas() {
@@ -273,7 +286,7 @@ function playerOutOfCanvas() {
 }
 function playerIntersectsWithObstacle() {
 
-    rocks.forEach(function (element, index) {
+    walls.forEach(function (element, index) {
         if (player.boundingBox.intersects(element.boundingBox)) {
             console.log("intersected with %d", index);
             if (player.movement.up) {
