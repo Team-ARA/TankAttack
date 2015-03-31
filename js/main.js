@@ -14,7 +14,7 @@ var playerLooks = "up";
 var walls = new Array();
 
 /*these are the terrain elements*/
-for (var i = 1; i < 600; i += 30) {
+for (var i = 0; i < 600; i += 30) {
     walls.push(new Obstacle(-15, i));
     walls.push(new Obstacle(585, i));
 }
@@ -43,7 +43,13 @@ walls.push(new Obstacle(480, 150));
 walls.push(new Obstacle(450, 90));
 walls.push(new Obstacle(420, 90));
 
-walls.push(new Obstacle(, 90));
+walls.push(new Obstacle(15, 270));
+walls.push(new Obstacle(45, 270));
+walls.push(new Obstacle(75, 270));
+
+walls.push(new Obstacle(555, 270));
+walls.push(new Obstacle(525, 270));
+walls.push(new Obstacle(495, 270));
 /*terain objects end here*/
 
 var enemies = new Array();
@@ -79,6 +85,7 @@ function tick() {
     bulletIntersectWithEnemy();
     enemyBulletIntersectWithPlayer();
     bulletIntersectWithObstacles();
+    enemyBulletIntersectWithObstacles();
     bulletOutOfCanvas();
     playerOutOfCanvas();
     enemyOutOfCanvas();
@@ -145,19 +152,18 @@ function bulletIntersectWithEnemy() {
 }
 
 function enemyBulletIntersectWithPlayer() {
-
     for (var i = 0; i < enemyBullets.length; i++) {
         if (enemyBullets[i].boundingBox.intersects(player.boundingBox)) {
             explosionAnim.push(new Explosion(player.position.x + 10, player.position.y + 10));
             resetPlayer();
             enemyBullets.splice(i, 1);
             console.log(1);
-            if(lives > 0){
+            if (lives > 0) {
                 var life = document.getElementById('life' + lives);
                 life.style['display'] = 'none';
                 console.log(2);
             }
-            if(lives == 0) {
+            if (lives == 0) {
                 ctx.fillStyle = 'black';
                 ctx.lineWidth = 10;
                 ctx.fillText('GAME OVER', 100, 200);
@@ -173,6 +179,17 @@ function bulletIntersectWithObstacles() {
         for (var bulletIndex = 0; bulletIndex < bullets.length; bulletIndex++) {
             if (bullets[bulletIndex].boundingBox.intersects(walls[obstacleIndex].boundingBox)) {
                 bullets.splice(bulletIndex, 1);
+            }
+        }
+    }
+
+}
+
+function enemyBulletIntersectWithObstacles() {
+    for (var obstacleIndex = 0; obstacleIndex < walls.length; obstacleIndex++) {
+        for (var bulletIndex = 0; bulletIndex < enemyBullets.length; bulletIndex++) {
+            if (enemyBullets[bulletIndex].boundingBox.intersects(walls[obstacleIndex].boundingBox)) {
+                enemyBullets.splice(bulletIndex, 1);
             }
         }
     }
@@ -204,11 +221,11 @@ function movePlayer() {
         bullets.push(new Bullet(player.position.x + 10, player.position.y + 10, playerLooks));
         shootOnce = false;
 
-       var reloadTime = setTimeout(function() {
-           shootOnce = true;
-       }, 500)
+        var reloadTime = setTimeout(function () {
+            shootOnce = true;
+        }, 500)
     }
-    
+
 }
 
 
@@ -220,13 +237,11 @@ function enemiesShooting() {
 
             var reloadTimeEnemy = setTimeout(function () {
                 shootOnceEnemy = true;
-            },2000)
+            }, 2000)
 
         }
     }
 }
-
-
 
 function enemyOutOfCanvas() {
     enemies.forEach(function (item, index) {
@@ -320,7 +335,7 @@ function playerLooking() {
 }
 
 function explosionAnimTimer() {
-  
+
     for (var animIndex = 0; animIndex < explosionAnim.length; animIndex++) {
         explosionAnim[animIndex].timer += 0.01;
         if (explosionAnim[animIndex].timer > 1) {
@@ -337,7 +352,7 @@ function resetPlayer() {
     player.watchPos.down = false;
     player.watchPos.right = false;
     player.watchPos.left = false;
-  
+
 }
 
 update();
