@@ -15,6 +15,9 @@
         #canvas {
             border: solid 1px black;
         }
+        section {
+            display: flex;
+        }
         div {
             width: 300px;
             height: 50px;
@@ -22,6 +25,12 @@
             /*display: inline-block;*/
             color: #815d2c;
             font: normal bold 20px Arial;
+        }
+        #counter {
+            margin: 10px 0 0 100px;
+        }
+        span{
+            width: 50px;
         }
     </style>
 </head>
@@ -34,6 +43,7 @@
     <canvas id="canvas" width="600" height="550">
         Your browser does not support canvas.
     </canvas>
+    <section>
     <div>
         LIVES:
         <img src="images/tank_1.png" id="life1">
@@ -42,6 +52,8 @@
         <img src="images/tank_1.png" id="life4">
         <img src="images/tank_1.png" id="life5">
     </div>
+    <div id="counter">Enemies defeated: <span id="nums">0</span></div>
+    </section>
     <script src="js/explosion.js"></script>
     <script src="js/Bullet.js"></script>
     <script src="js/terrain.js"></script>
