@@ -241,7 +241,7 @@ function enemyIntersectWithObstacles() {
                         resetEnemyMovement(enemyIndex, "down");
                     }
                     else {
-                        resetEnemyMovement(enemyIndex, "up");
+                        resetEnemyMovement(enemyIndex, "down");
                     }
                 }
                 else if (enemies[enemyIndex].watchPos.left) {
@@ -250,7 +250,7 @@ function enemyIntersectWithObstacles() {
                         resetEnemyMovement(enemyIndex, "down");
                     }
                     else {
-                        resetEnemyMovement(enemyIndex, "up");
+                        resetEnemyMovement(enemyIndex, "down");
                     }
                     
                 }
@@ -337,9 +337,12 @@ function enemiesShooting() {
             if (enemies[i].watchPos.down == true) {
                 enemyLooks = "down";
             }
-            enemyBullets.push(new Bullet(enemies[i].position.x + 10, enemies[i].position.y + 10, enemyLooks));
-            shootOnceEnemy = false;
+            
+                enemyBullets.push(new Bullet(enemies[i].position.x + 10, enemies[i].position.y + 10, enemyLooks));
+                shootOnceEnemy = false;
 
+            
+            
             var reloadTimeEnemy = setTimeout(function () {
                 shootOnceEnemy = true;
             }, 2000)
