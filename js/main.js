@@ -11,6 +11,7 @@ var input = new Input();
 attachListeners(input);
 var terrain = new Terrain(0, 0);
 var playerLooks = "up";
+var enemyLooks = "down";
 var walls = new Array();
 
 var shootEff = document.getElementById("soundEfx");
@@ -20,6 +21,8 @@ var movingEff = document.getElementById("movingEfx");
 for (var i = 0; i < 600; i += 30) {
     walls.push(new Obstacle(-15, i));
     walls.push(new Obstacle(585, i));
+    walls.push(new Obstacle(15 + i, 540));
+    walls.push(new Obstacle(15+i, 0));
 }
 
 walls.push(new Obstacle(120, 90));
@@ -54,45 +57,12 @@ walls.push(new Obstacle(555, 270));
 walls.push(new Obstacle(525, 270));
 walls.push(new Obstacle(495, 270));
 
-walls.push(new Obstacle(15, 540));
-walls.push(new Obstacle(45, 540));
-walls.push(new Obstacle(75, 540));
-walls.push(new Obstacle(105, 540));
-walls.push(new Obstacle(135, 540));
-walls.push(new Obstacle(165, 540));
-walls.push(new Obstacle(195, 540));
-walls.push(new Obstacle(225, 540));
-walls.push(new Obstacle(255, 540));
-walls.push(new Obstacle(285, 540));
-walls.push(new Obstacle(315, 540));
-walls.push(new Obstacle(345, 540));
-walls.push(new Obstacle(375, 540));
-walls.push(new Obstacle(405, 540));
-walls.push(new Obstacle(435, 540));
-walls.push(new Obstacle(465, 540));
-walls.push(new Obstacle(495, 540));
-walls.push(new Obstacle(525, 540));
-walls.push(new Obstacle(555, 540));
+walls.push(new Obstacle(canvas.width / 2, canvas.height / 2));
+walls.push(new Obstacle(canvas.width / 2, canvas.height / 2-30));
+walls.push(new Obstacle(canvas.width / 2, canvas.height / 2+30));
 
-walls.push(new Obstacle(15, 0));
-walls.push(new Obstacle(45, 0));
-walls.push(new Obstacle(75, 0));
-walls.push(new Obstacle(105, 0));
-walls.push(new Obstacle(135, 0));
-walls.push(new Obstacle(165, 0));
-walls.push(new Obstacle(195, 0));
-walls.push(new Obstacle(225, 0));
-walls.push(new Obstacle(255, 0));
-walls.push(new Obstacle(285, 0));
-walls.push(new Obstacle(315, 0));
-walls.push(new Obstacle(345, 0));
-walls.push(new Obstacle(375, 0));
-walls.push(new Obstacle(405, 0));
-walls.push(new Obstacle(435, 0));
-walls.push(new Obstacle(465, 0));
-walls.push(new Obstacle(495, 0));
-walls.push(new Obstacle(525, 0));
-walls.push(new Obstacle(555, 0));
+
+
 /*terain objects end here*/
 
 var enemies = new Array();
@@ -104,7 +74,7 @@ var timer;
 function startTimer() {
     timer = setInterval(function () {
         if (Math.random() < 0.0005) {
-            enemies.push(new Enemy(Math.random() * canvas.width, canvas.height - 580));
+            enemies.push(new Enemy(Math.random() * canvas.width, canvas.height - 520));
         }
     }, 3000);
 }
@@ -252,20 +222,32 @@ function enemyIntersectWithObstacles() {
                 }
                 else if (enemies[enemyIndex].watchPos.right) {
                     enemies[enemyIndex].position.set(enemies[enemyIndex].position.x - 3, enemies[enemyIndex].position.y);
-                    resetEnemyMovement(enemyIndex, "down");
+                    if (canvas.height / 2 > enemies[enemyIndex].position.y) {
+                        resetEnemyMovement(enemyIndex, "down");
+                    }
+                    else {
+                        resetEnemyMovement(enemyIndex, "up");
+                    }
                 }
                 else if (enemies[enemyIndex].watchPos.left) {
                     enemies[enemyIndex].position.set(enemies[enemyIndex].position.x + 3, enemies[enemyIndex].position.y);
-                    resetEnemyMovement(enemyIndex, "down");
+                    if (canvas.height / 2 > enemies[enemyIndex].position.y) {
+                        resetEnemyMovement(enemyIndex, "down");
+                    }
+                    else {
+                        resetEnemyMovement(enemyIndex, "up");
+                    }
+                    
                 }
                 else if (enemies[enemyIndex].watchPos.up) {
                     enemies[enemyIndex].position.set(enemies[enemyIndex].position.x, enemies[enemyIndex].position.y + 3);
-                    if (enemies[enemyIndex].position.y > canvas.width / 2) {
+                    if (enemies[enemyIndex].position.x > canvas.width / 2) {
                         resetEnemyMovement(enemyIndex, "left");
-
+                        console.log(1)
                     }
                     else {
                         resetEnemyMovement(enemyIndex, "right");
+                        console.log(2);
                     }
                 }
             }
@@ -325,7 +307,20 @@ function movePlayer() {
 function enemiesShooting() {
     if (shootOnceEnemy) {
         for (var i = 0; i < enemies.length; i++) {
-            enemyBullets.push(new Bullet(enemies[i].position.x + 10, enemies[i].position.y + 10, "down"));
+            if (enemies[i].watchPos.right == true) {
+                enemyLooks = "right";
+            }
+            if (enemies[i].watchPos.left == true) {
+                enemyLooks = "left";
+            }
+            if (enemies[i].watchPos.up == true) {
+                enemyLooks = "up";
+            }
+
+            if (enemies[i].watchPos.down == true) {
+                enemyLooks = "down";
+            }
+            enemyBullets.push(new Bullet(enemies[i].position.x + 10, enemies[i].position.y + 10, enemyLooks));
             shootOnceEnemy = false;
 
             var reloadTimeEnemy = setTimeout(function () {
