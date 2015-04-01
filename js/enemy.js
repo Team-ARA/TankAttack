@@ -11,7 +11,10 @@ var Enemy = (function () {
         this.width = 32;
         this.height = 32;
         this.animation = new Animation(32, 32, 0, 1, 4, 'images/Enemies.png', 4, 1, 1);
-        this.animationHit = new Animation(100, 100, 0, 0 , 74, 'images/explosion.png', 20, 9, 8);
+        this.animationDown = new Animation(this.width, this.width, 0, 1, 4, 'images/Enemies.png', 4, 1, 1);
+        this.animationUp = new Animation(this.width, this.width, 0, 0, 1, 'images/Enemies.png', 4, 0, 0);
+        this.animationRight = new Animation(this.width, this.width, 1, 0, 1, 'images/Enemies.png', 4, 1, 0);
+        this.animationLeft = new Animation(this.width, this.width, 1, 1, 1, 'images/Enemies.png', 4, 0, 0);
         this.boundingBox = new Rectangle(x, y, this.width, this.height)
     }
 
@@ -22,9 +25,11 @@ var Enemy = (function () {
             this.watchPos.left = false;
             this.watchPos.down = false;
             this.watchPos.up = true;
+            this.animation = this.animationUp;
             this.position.y -= this.velocity + this.velocityModifier;
          }
         if (this.movement.down) {
+            this.animation = this.animationDown;
             this.watchPos.right = false;
             this.watchPos.left = false;
             this.watchPos.up = false;
@@ -32,6 +37,7 @@ var Enemy = (function () {
             this.position.y += this.velocity + this.velocityModifier;
         }
         if (this.movement.left) {
+            this.animation = this.animationLeft;
             this.watchPos.right = false;
             this.watchPos.up = false;
             this.watchPos.down = false;
@@ -39,6 +45,7 @@ var Enemy = (function () {
             this.position.x -= this.velocity + this.velocityModifier;
         }
         if (this.movement.right) {
+            this.animation = this.animationRight;
             this.watchPos.left = false;
             this.watchPos.up = false;
             this.watchPos.down = false;
@@ -47,7 +54,7 @@ var Enemy = (function () {
         }
 
         this.animation.position.set(this.position.x, this.position.y);
-        this.animationHit.position.set(this.position.x-30, this.position.y-30);
+      
         this.boundingBox.x = this.position.x;
         this.boundingBox.y = this.position.y;
         this.animation.update();
