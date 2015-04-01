@@ -58,21 +58,13 @@ var Enemy = (function () {
         this.boundingBox.x = this.position.x;
         this.boundingBox.y = this.position.y;
         this.animation.update();
-        for (var i = 0; i < bullets.length; i++) {
-            if(this.boundingBox.intersects(bullets[i].boundingBox)){
-                this.animationHit.update();
-            }
-        }
+       
 
 
     };
     Enemy.prototype.render = function (ctx) {
         this.animation.draw(ctx);
-        for (var i = 0; i < bullets.length; i++) {
-            if(this.boundingBox.intersects(bullets[i].boundingBox)){
-                this.animationHit.draw(ctx);
-            }
-        }
+        
     };
 
     
