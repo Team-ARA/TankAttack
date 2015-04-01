@@ -19,23 +19,26 @@ var movingEff = document.getElementById("movingEfx");
 
 /*these are the terrain elements*/
 for (var i = 0; i < 600; i += 30) {
-    walls.push(new Obstacle(-15, i));
-    walls.push(new Obstacle(585, i));
-    walls.push(new Obstacle(15 + i, 540));
-    walls.push(new Obstacle(15+i, 0));
+    walls.push(new Obstacle(0, i));
+    walls.push(new Obstacle(570, i));
+    walls.push(new Obstacle(i, 540));
+    walls.push(new Obstacle(i, 0));
 }
+/*
+//DESTRUCTABLE WALL DEMO
+walls.push(new DestObstacle(260, 245));*/
 
+walls.push(new Obstacle(90, 90));
+walls.push(new Obstacle(90, 120));
+walls.push(new Obstacle(90, 150));
 walls.push(new Obstacle(120, 90));
-walls.push(new Obstacle(120, 120));
-walls.push(new Obstacle(120, 150));
 walls.push(new Obstacle(150, 90));
-walls.push(new Obstacle(180, 90));
 
+walls.push(new Obstacle(90, 450));
+walls.push(new Obstacle(90, 420));
+walls.push(new Obstacle(90, 390));
 walls.push(new Obstacle(120, 450));
-walls.push(new Obstacle(120, 420));
-walls.push(new Obstacle(120, 390));
 walls.push(new Obstacle(150, 450));
-walls.push(new Obstacle(180, 450));
 
 walls.push(new Obstacle(480, 450));
 walls.push(new Obstacle(480, 420));
@@ -49,19 +52,27 @@ walls.push(new Obstacle(480, 150));
 walls.push(new Obstacle(450, 90));
 walls.push(new Obstacle(420, 90));
 
-walls.push(new Obstacle(15, 270));
-walls.push(new Obstacle(45, 270));
-walls.push(new Obstacle(75, 270));
+walls.push(new Obstacle(30, 270));
+walls.push(new Obstacle(60, 270));
 
-walls.push(new Obstacle(555, 270));
-walls.push(new Obstacle(525, 270));
-walls.push(new Obstacle(495, 270));
+walls.push(new Obstacle(540, 270));
+walls.push(new Obstacle(510, 270));
 
-walls.push(new Obstacle(canvas.width / 2, canvas.height / 2));
-walls.push(new Obstacle(canvas.width / 2, canvas.height / 2-30));
-walls.push(new Obstacle(canvas.width / 2, canvas.height / 2+30));
+walls.push(new Obstacle(210, 210));
+walls.push(new Obstacle(240, 120));
+walls.push(new Obstacle(180, 210));
 
+walls.push(new Obstacle(360, 330));
+walls.push(new Obstacle(330, 420));
+walls.push(new Obstacle(390, 330));
 
+walls.push(new Obstacle(210, 330));
+walls.push(new Obstacle(180, 330));
+walls.push(new Obstacle(240, 420));
+
+walls.push(new Obstacle(360, 210));
+walls.push(new Obstacle(330, 120));
+walls.push(new Obstacle(390, 210));
 
 /*terain objects end here*/
 
@@ -79,7 +90,7 @@ function startTimer() {
     }, 3000);
 }
 
-var player = new Player(canvas.width / 2, canvas.height - 50);
+var player = new Player(canvas.width / 2, canvas.height - 60);
 //var enemy = new Enemy(Math.random() * (canvas.width /2), canvas.height - 580);
 var lives = player.lives;
 var counter = 0;
@@ -102,9 +113,9 @@ function tick() {
     enemyBulletIntersectWithPlayer();
     bulletIntersectWithObstacles();
     enemyBulletIntersectWithObstacles();
-    bulletOutOfCanvas();
+    /*bulletOutOfCanvas();
     playerOutOfCanvas();
-    enemyOutOfCanvas();
+    enemyOutOfCanvas();*/
     playerIntersectsWithObstacle();
     movePlayer();
     enemiesShooting();
@@ -185,6 +196,7 @@ function enemyBulletIntersectWithPlayer() {
                 console.log(2);
             }
             if (lives == 0) {
+                console.log("game over");
                 ctx.fillStyle = 'black';
                 ctx.lineWidth = 10;
                 ctx.fillText('GAME OVER', 100, 200);
@@ -200,11 +212,14 @@ function bulletIntersectWithObstacles() {
         for (var bulletIndex = 0; bulletIndex < bullets.length; bulletIndex++) {
             if (bullets[bulletIndex].boundingBox.intersects(walls[obstacleIndex].boundingBox)) {
                 bullets.splice(bulletIndex, 1);
+                if (walls[obstacleIndex].constructor.name === "DestObstacle") {
+                    walls.splice(obstacleIndex, 1);
+                }
             }
         }
     }
-
 }
+
 function enemyIntersectWithObstacles() {
     for (var obstacleIndex = 0; obstacleIndex < walls.length; obstacleIndex++) {
         for (var enemyIndex = 0; enemyIndex < enemies.length; enemyIndex++) {
@@ -253,7 +268,6 @@ function enemyIntersectWithObstacles() {
             }
         }
     }
- 
 }
 
 function enemyBulletIntersectWithObstacles() {
@@ -261,6 +275,9 @@ function enemyBulletIntersectWithObstacles() {
         for (var bulletIndex = 0; bulletIndex < enemyBullets.length; bulletIndex++) {
             if (enemyBullets[bulletIndex].boundingBox.intersects(walls[obstacleIndex].boundingBox)) {
                 enemyBullets.splice(bulletIndex, 1);
+                if (walls[obstacleIndex].constructor.name === "DestObstacle") {
+                    walls.splice(obstacleIndex, 1);
+                }
             }
         }
     }
@@ -331,16 +348,16 @@ function enemiesShooting() {
     }
 }
 
-function enemyOutOfCanvas() {
+/*function enemyOutOfCanvas() {
     enemies.forEach(function (item, index) {
         if (item.position.y > 600) {
             enemies.splice(index, 1);
         }
     })
-}
+}*/
 
 
-function bulletOutOfCanvas() {
+/*function bulletOutOfCanvas() {
     bullets.forEach(function (item, index) {
         if (item.position.x < -10) {
             bullets.splice(index, 1);
@@ -370,10 +387,10 @@ function bulletOutOfCanvas() {
             enemyBullets.splice(index, 1);
         }
     })
-}
+}*/
 
 
-function playerOutOfCanvas() {
+/*function playerOutOfCanvas() {
     if (player.position.x < 2) {
         player.position.set(2, player.position.y);
     }
@@ -386,7 +403,7 @@ function playerOutOfCanvas() {
     if (player.position.y > 570) {
         player.position.set(player.position.x, 570);
     }
-}
+}*/
 function playerIntersectsWithObstacle() {
 
     walls.forEach(function (element, index) {

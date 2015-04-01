@@ -251,10 +251,10 @@ var Rectangle = (function() {
 }());
 var Animation = (function() {
     function Animation(width, height, row, column, limit, imgSrc, fps, columns, rows) {
-        if(!fps || fps >=33) {
+        if(!fps || fps >=66) {
             this.fps = 1;
         } else {
-            this.fps = 33 / fps;
+            this.fps = 66 / fps;
         }
         this.fpsCounter = 0;
         //this.frame = 0;

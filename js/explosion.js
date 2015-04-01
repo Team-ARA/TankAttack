@@ -4,7 +4,7 @@
 var Explosion = (function () {
     function Explosion(x, y) {
         this.position = new Vector2(x, y);
-        this.animation = new Animation(100, 100, 0, 0, 74, 'images/explosion.png', 20, 9, 8);
+        this.animation = new Animation(100, 100, 0, 0, 74, 'images/explosion.png', 40, 9, 8);
         this.timer = 0.0;
     }
 

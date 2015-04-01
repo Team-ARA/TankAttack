@@ -3,7 +3,30 @@
 	background-size: 100%;
 }
 h1{
+	margin: 2px;
 	text-align: center;
 	font-style: italic;
+	font-size: 25px;
 	color: #815d2c;
 }
+#canvas
+{
+ 	border: solid 1px black;
+}
+section {
+ 	display: flex;
+}
+div {
+width: 300px;
+            height: 35px;
+            /*margin-left: 20px;*/
+            /*display: inline-block;*/
+            color: white;
+            font: normal bold 18px Arial;
+        }
+        #counter {
+            margin: 5px 0 0 100px;
+        }
+        span{
+            width: 50px;
+        }
